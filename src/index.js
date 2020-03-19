@@ -95,7 +95,6 @@ function addComment(event) {
   const li = document.createElement('li');
   li.innerText = input.value;
   const deleteButton = document.createElement('button');
-    // deleteButton.dataset.commentId = commentId;
     deleteButton.innerText = "Delete";
     deleteButton.addEventListener("click", deleteComment);
     li.appendChild(deleteButton);
