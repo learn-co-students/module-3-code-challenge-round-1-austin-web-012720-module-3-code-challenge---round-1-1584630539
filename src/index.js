@@ -77,7 +77,6 @@ function likeImage(event){
 
 
 function updateBackendLikes(likes){
-  ///It keeps saying could not make connection. Will try to troubleshoot API issue if time. 422 (Unprocessable Entity) error
   const likeURL = `https://randopic.herokuapp.com/likes/`
   fetch(`${likeURL}`, {
     method: 'POST',
