@@ -1,4 +1,4 @@
-let imageId = 4910;
+const imageId = 4910;
 const imageURL = `https://randopic.herokuapp.com/images/${imageId}`;
 const likeURL = `https://randopic.herokuapp.com/likes/`;
 const commentsURL = `https://randopic.herokuapp.com/comments/`;
@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(function(json){
       renderImage(json)
     });
+  postLike();
 })
 
 function fetchImage(){
@@ -18,29 +19,44 @@ function fetchImage(){
         return response.json();
       })
 }
-function renderImage(json){
-  let imgContainer = document.querySelector('#image_content');
 
-  let img = document.createElement('img');
+function renderImage(json){
+  const imgContainer = document.querySelector('#image_content');
+
+  const img = document.createElement('img');
   img.setAttribute('src', imageURL);
   imgContainer.appendChild(img);
 
-  let name = document.getElementById('name');
+  const name = document.getElementById('name');
   name.innerText = json.name;
 
-  let likes = document.getElementById('likes');
+  const likes = document.getElementById('likes');
   likes.innerText = `${json.like_count}`;
 
-  let comments = document.getElementById('comments');
+  const comments = document.getElementById('comments');
   for (let i = 0; i < json.comments.length; i++){
     let comment = document.createElement('li');
     comment.innerText = json.comments[i].content;
     comments.appendChild(comment);
   }
+}
 
-  let likeButton = document.getElementById('like_button');
+function postLike(){
+  const likeButton = document.getElementById('like_button');
+  const likes = document.getElementById('likes');
+
   likeButton.addEventListener('click', function(e){
-    let likes = document.getElementById('likes');
-    likes.innerText = `${parseInt(likes.innerText) + 1}`
+    likes.innerText = `${parseInt(likes.innerText) + 1}`;
+    fetch(likeURL, {
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        image_id: imageId,
+        like_count: likes.innerText
+      })
+    })
   })
 }
