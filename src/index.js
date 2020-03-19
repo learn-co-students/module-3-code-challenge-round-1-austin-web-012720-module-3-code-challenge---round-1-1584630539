@@ -23,15 +23,14 @@ function fetchImage(){
 function renderImage(json){
   const imgContainer = document.querySelector('#image_content');
 
-  const img = document.createElement('img');
-  img.setAttribute('src', imageURL);
-  imgContainer.appendChild(img);
+  const img = document.getElementById('image');
+  img.setAttribute('src', json.url);
 
   const name = document.getElementById('name');
   name.innerText = json.name;
 
   const likes = document.getElementById('likes');
-  likes.innerText = `${json.like_count}`;
+  likes.innerText = json.like_count;
 
   const comments = document.getElementById('comments');
   for (let i = 0; i < json.comments.length; i++){
